@@ -1,0 +1,62 @@
+<div class="container">
+    <h1>Template-Driven Form</h1>
+  
+    <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
+      
+      <!-- Name -->
+      <label>Name:</label>
+      <input type="text" name="name" [(ngModel)]="user.name" required #nameRef="ngModel" placeholder="Enter Name" />
+      <div class="error" *ngIf="nameRef.invalid && nameRef.touched">
+        Name is required.
+      </div>
+  
+      <!-- Email -->
+      <label>Email:</label>
+      <input type="email" name="email" [(ngModel)]="user.email" required email #emailRef="ngModel" placeholder="Enter Email" />
+      <div class="error" *ngIf="emailRef.invalid && emailRef.touched">
+        Valid email is required.
+      </div>
+  
+      <!-- Age -->
+      <label>Age:</label>
+      <input type="number" name="age" [(ngModel)]="user.age" required min="18" #ageRef="ngModel" placeholder="Enter Age" />
+      <div class="error" *ngIf="ageRef.invalid && ageRef.touched">
+        Age must be 18 or older.
+      </div>
+  
+      <!-- Gender -->
+      <label>Gender:</label>
+      <div class="radio-group">
+        <input type="radio" name="gender" value="Male" [(ngModel)]="user.gender" required #genderRef="ngModel" /> Male
+        <input type="radio" name="gender" value="Female" [(ngModel)]="user.gender" /> Female
+      </div>
+      <div class="error" *ngIf="genderRef.invalid && genderRef.touched">
+        Select a gender.
+      </div>
+  
+      <!-- Skills -->
+      <label>Skills:</label>
+      <div class="checkbox-group">
+        <input type="checkbox" name="angular" [(ngModel)]="user.skills.angular" /> Angular
+        <input type="checkbox" name="react" [(ngModel)]="user.skills.react" /> React
+      </div>
+      <div class="error" *ngIf="!user.skills.angular && !user.skills.react && userForm.submitted">
+        Select at least one skill.
+      </div>
+  
+      <button type="submit" [disabled]="userForm.invalid">Submit</button>
+    </form>
+  
+    <div *ngIf="submitted">
+      <h3>Submitted Data:</h3>
+      <p><strong>Name:</strong> {{ user.name }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      <p><strong>Age:</strong> {{ user.age }}</p>
+      <p><strong>Gender:</strong> {{ user.gender }}</p>
+      <p><strong>Skills:</strong> 
+        {{ user.skills.angular ? 'Angular' : '' }}
+        {{ user.skills.react ? 'React' : '' }}
+      </p>
+    </div>
+  </div>
+  

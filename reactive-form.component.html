@@ -1,0 +1,62 @@
+<div class="container">
+    <h1>Reactive Form</h1>
+  
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      
+      <!-- Name -->
+      <label>Name:</label>
+      <input type="text" formControlName="name" placeholder="Enter Name" />
+      <div class="error" *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched">
+        Name is required.
+      </div>
+  
+      <!-- Email -->
+      <label>Email:</label>
+      <input type="email" formControlName="email" placeholder="Enter Email" />
+      <div class="error" *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched">
+        Valid email is required.
+      </div>
+  
+      <!-- Age -->
+      <label>Age:</label>
+      <input type="number" formControlName="age" placeholder="Enter Age" />
+      <div class="error" *ngIf="userForm.get('age')?.invalid && userForm.get('age')?.touched">
+        Age must be 18 or older.
+      </div>
+  
+      <!-- Gender -->
+      <label>Gender:</label>
+      <div class="radio-group">
+        <input type="radio" formControlName="gender" value="Male" /> Male
+        <input type="radio" formControlName="gender" value="Female" /> Female
+      </div>
+      <div class="error" *ngIf="userForm.get('gender')?.invalid && userForm.get('gender')?.touched">
+        Select a gender.
+      </div>
+  
+      <!-- Skills -->
+      <label>Skills:</label>
+      <div class="checkbox-group">
+        <input type="checkbox" formControlName="skills.angular" /> Angular
+        <input type="checkbox" formControlName="skills.react" /> React
+      </div>
+      <div class="error" *ngIf="!userForm.get('skills.angular')?.value && !userForm.get('skills.react')?.value && userForm.touched">
+        Select at least one skill.
+      </div>
+  
+      <button type="submit" [disabled]="userForm.invalid">Submit</button>
+    </form>
+  
+    <div *ngIf="submitted">
+      <h3>Submitted Data:</h3>
+      <p><strong>Name:</strong> {{ userForm.value.name }}</p>
+      <p><strong>Email:</strong> {{ userForm.value.email }}</p>
+      <p><strong>Age:</strong> {{ userForm.value.age }}</p>
+      <p><strong>Gender:</strong> {{ userForm.value.gender }}</p>
+      <p><strong>Skills:</strong> 
+        {{ userForm.value.skills.angular ? 'Angular' : '' }}
+        {{ userForm.value.skills.react ? 'React' : '' }}
+      </p>
+    </div>
+  </div>
+  
